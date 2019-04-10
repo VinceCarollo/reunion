@@ -17,13 +17,18 @@ class Reunion
     end
   end
 
-  def breakout
+  def create_person_hash
     breakout = {}
     @activities.each do |activity|
       activity.participants.keys.each do |person|
         breakout[person] = 0
       end
     end
+    breakout
+  end
+
+  def breakout
+    breakout = create_person_hash
     @activities.each do |activity|
       activity.owed.each do |person, amount_owed|
         breakout[person] += amount_owed
@@ -38,5 +43,25 @@ class Reunion
       summary << "#{person}: #{owed}"
     end
     summary.join("\n")
+  end
+
+  def detailed_breakout
+    detailed_breakout = {}
+    @activities.each do |activity|
+      activity.participants.each do |participant|
+        detailed_breakout[participant[0]] = []
+      end
+    end
+    @activities.each do |activity|
+      activity_info = {
+        activity: activity.name,
+        payees: activity.participants,
+        amount: activity.owed
+      }
+      activity.participants.each do |participant|
+        detailed_breakout[participant[0]] << activity_info
+      end
+    end
+    binding.pry
   end
 end
