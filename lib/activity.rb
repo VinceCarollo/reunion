@@ -15,7 +15,7 @@ class Activity
   end
 
   def split
-    @participants.values.sum / @participants.length
+    total_cost / @participants.length
   end
 
   def owed
